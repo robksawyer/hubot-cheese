@@ -40,7 +40,7 @@ failureCodes =
   '500': 'Internal Server Error'
   '504': 'Service Unavailable'
 
-cheeseUser = (toUser, fromUser) ->
+cheeseUser = (msg, toUser, fromUser) ->
   endpoint = url.format
       protocol: 'https'
       host: 'curdcollective-api.herokuapp.com'
@@ -135,7 +135,7 @@ module.exports = (robot) ->
 
     if users.length is 1
       user = users[0]
-      cheeseUser(user, msg.message.user)
+      cheeseUser(msg, user, msg.message.user)
       msg.send "Cheese being prepared"
     else if users.length > 1
       msg.send "Too many users like that"
