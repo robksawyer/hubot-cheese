@@ -52,7 +52,7 @@ module.exports = (robot) ->
   #
   robot.respond /eat cheese|eat a cheese|have some cheese/i, (msg) ->
     endpoint = url.format
-      protocol: 'http'
+      protocol: 'https'
       host: 'curdcollective-api.herokuapp.com'
       pathname: util.format '1.0/cheeses/info/%s', Math.ceil(Math.random() * (2576 - 1) + 1)
 
@@ -85,7 +85,7 @@ module.exports = (robot) ->
   #
   robot.respond /cheese me|i want cheese|can i haz chee(s|z)e(.*)/i, (msg) ->
     endpoint = url.format
-      protocol: 'http'
+      protocol: 'https'
       host: 'curdcollective-api.herokuapp.com'
       pathname: util.format '1.0/cheeses/info/%s', Math.ceil(Math.random() * (2576 - 1) + 1)
 
@@ -119,7 +119,7 @@ module.exports = (robot) ->
   robot.respond /cheese deets ([0-9]*)|what do you know about the cheese ([0-9]*)/i, (msg) ->
 
     endpoint = url.format
-      protocol: 'http'
+      protocol: 'https'
       host: 'curdcollective-api.herokuapp.com'
       pathname: util.format '1.0/cheeses/info/%s', msg.match[1].trim()
 
@@ -195,7 +195,7 @@ module.exports = (robot) ->
   robot.hear /send cheese to @(.*)/i, (msg) ->
 
     endpoint = url.format
-            protocol: 'http'
+            protocol: 'https'
             host: 'curdcollective-api.herokuapp.com'
             pathname: util.format '1.0/cheeses/info/%s', Math.ceil(Math.random() * (2576 - 1) + 1)
 
@@ -238,7 +238,7 @@ module.exports = (robot) ->
   #
   robot.respond /how many cheeses exist(.*)|total cheese(.*)|how many cheeses|cheese total/i, (msg) ->
     endpoint = url.format
-      protocol: 'http'
+      protocol: 'https'
       host: 'curdcollective-api.herokuapp.com'
       pathname: util.format '1.0/cheeses/total'
 
