@@ -126,6 +126,8 @@ module.exports = (robot) ->
       host: 'curdcollective-api.herokuapp.com'
       pathname: util.format '1.0/cheeses/info/%s', msg.match[1]
 
+    msg.send "Searching my cheese brain for cheese " + msg.match[1]
+
     msg
       .http(endpoint)
       .query
