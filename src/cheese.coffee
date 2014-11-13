@@ -31,6 +31,7 @@ process.env.HUBOT_CC_CLIENT_ID ||= 'c7db062c'
 process.env.HUBOT_CC_CLIENT_SECRET ||= '194e46e98dfccaa10de6f198b3dce718'
 
 failureCodes =
+  '401': 'Unauthorized'
   '403': 'Forbidden'
   '404': 'Not Found'
   '429': 'Too Many Requests'
