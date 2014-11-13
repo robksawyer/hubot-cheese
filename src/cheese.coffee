@@ -40,7 +40,7 @@ failureCodes =
   '500': 'Internal Server Error'
   '504': 'Service Unavailable'
 
-cheeseUser = (toUser, fromUser, message) ->
+cheeseUser = (toUser, fromUser) ->
   endpoint = url.format
       protocol: 'https'
       host: 'curdcollective-api.herokuapp.com'
@@ -124,7 +124,7 @@ module.exports = (robot) ->
   # Command:
   #   Hubot> hubot cheese <user name>: <message>
   #
-  robot.hear /cheese (.*?): (.*)/i, (msg) ->
+  robot.hear /cheese (.*?)/i, (msg) ->
     endpoint = url.format
       protocol: 'https'
       host: 'curdcollective-api.herokuapp.com'
@@ -135,7 +135,7 @@ module.exports = (robot) ->
 
     if users.length is 1
       user = users[0]
-      cheeseUser(user, msg.message.user, msg.match[2])
+      cheeseUser(user, msg.message.user)
       msg.send "Cheese being prepared"
     else if users.length > 1
       msg.send "Too many users like that"
