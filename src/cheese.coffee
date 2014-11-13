@@ -132,14 +132,6 @@ module.exports = (robot) ->
         client_id: process.env.HUBOT_CC_CLIENT_ID
         client_secret: process.env.HUBOT_CC_CLIENT_SECRET
       .get() (err, res, body) ->
-        
-        if body
-          console.log body.toString
-        if err
-          console.log err.toString
-        if res
-          console.log res.toString
-
         try
           results = JSON.parse body
           return msg.send failureCodes[results.meta.code] if failureCodes[results.meta.code]
