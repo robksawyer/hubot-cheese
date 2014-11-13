@@ -15,10 +15,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/hubot-scripts/hubot-cheese.git"
+    "url": "git://github.com/robksawyer/hubot-cheese.git"
   },
   "bugs": {
-    "url": "https://github.com/hubot-scripts/hubot-cheese/issues"
+    "url": "https://github.com/robksawyer/hubot-cheese/issues"
   },
   "dependencies": {
     "coffee-script": "~1.6"
