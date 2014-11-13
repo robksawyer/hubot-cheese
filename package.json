@@ -21,14 +21,13 @@
     "url": "https://github.com/hubot-scripts/hubot-cheese/issues"
   },
   "dependencies": {
-    "coffee-script": "~1.6",
-    "url": "^0.10.1",
-    "util": "^0.10.3"
+    "coffee-script": "~1.6"
   },
   "devDependencies": {
     "hubot": ">= 2.5.1",
     "hubot-scripts": ">= 2.4.2",
     "hubot-script-boilerplate": ">= 0.0.0",
+    "hubot-cheese": ">= 0.0.1",
     "mocha": "*",
     "chai": "*",
     "sinon-chai": "*",

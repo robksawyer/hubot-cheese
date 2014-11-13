@@ -10,8 +10,6 @@
 #              This will provide you with the client_id and client_secret that you'll need to configure as an evironment variable.
 # 
 # Dependencies:
-#   util
-#   url
 #   
 # Configuration:
 #   HUBOT_CC_CLIENT_ID
@@ -60,4 +58,4 @@ module.exports = (robot) ->
           #msg.send util.format "%s - %s - %s - %s - %s - %s", user.id, user.first_name, user.last_name, user.username, user.display_name, user.url
           #msg.send util.format "Profile Picture: %s", user.images[115]
           msg.send "Yum, the #{cheese} was delicious"
-          
+
