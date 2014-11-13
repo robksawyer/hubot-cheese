@@ -62,9 +62,9 @@ module.exports = (robot) ->
         client_id: process.env.HUBOT_CC_CLIENT_ID
         client_secret: process.env.HUBOT_CC_CLIENT_SECRET
       .get() (err, res, body) ->
-        return msg.send failureCodes[body.meta.code] if failureCodes[body.meta.code]
         try
           results = JSON.parse body
+          return msg.send failureCodes[results.meta.code] if failureCodes[results.meta.code]
           cheese = results.response.Cheese.name
           cheese_producer = results.response.CheeseProducer.name
           age_classification = results.response.Cheese.age_classification
@@ -89,9 +89,9 @@ module.exports = (robot) ->
         client_id: process.env.HUBOT_CC_CLIENT_ID
         client_secret: process.env.HUBOT_CC_CLIENT_SECRET
       .get() (err, res, body) ->
-        return msg.send failureCodes[body.meta.code] if failureCodes[body.meta.code]
         try
           results = JSON.parse body
+          return msg.send failureCodes[results.meta.code] if failureCodes[results.meta.code]
           cheese = results.response.Cheese.name
           cheese_producer = results.response.CheeseProducer.name
           age_classification = results.response.Cheese.age_classification
@@ -128,9 +128,9 @@ module.exports = (robot) ->
             client_id: process.env.HUBOT_CC_CLIENT_ID
             client_secret: process.env.HUBOT_CC_CLIENT_SECRET
           .get() (err, res, body) ->
-            return msg.send failureCodes[body.meta.code] if failureCodes[body.meta.code]
             try
               results = JSON.parse body
+              return msg.send failureCodes[results.meta.code] if failureCodes[results.meta.code]
               cheese = results.response.Cheese.name
               cheese_producer = results.response.CheeseProducer.name
               age_classification = results.response.Cheese.age_classification
@@ -148,7 +148,7 @@ module.exports = (robot) ->
   # Command:
   #   Hubot> hubot how many cheeses exist?
   #
-  robot.respond /how many cheeses exist(.*)|total cheeses|how many cheeses|cheese total/i, (msg) ->
+  robot.respond /how many cheeses exist(.*)|total cheese(.*)|how many cheeses|cheese total/i, (msg) ->
     endpoint = url.format
       protocol: 'https'
       host: 'curdcollective-api.herokuapp.com'
@@ -160,9 +160,9 @@ module.exports = (robot) ->
         client_id: process.env.HUBOT_CC_CLIENT_ID
         client_secret: process.env.HUBOT_CC_CLIENT_SECRET
       .get() (err, res, body) ->
-        return msg.send failureCodes[body.meta.code] if failureCodes[body.meta.code]
         try
           results = JSON.parse body
+          return msg.send failureCodes[results.meta.code] if failureCodes[results.meta.code]
           total_cheese = results.response
           msg.send "So far I've counted #{total_cheese} cheeses."
 
