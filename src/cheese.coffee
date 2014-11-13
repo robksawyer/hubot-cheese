@@ -53,13 +53,15 @@ module.exports = (robot) ->
         client_secret: process.env.HUBOT_CC_CLIENT_SECRET
       .get() (err, res, body) ->
         #return msg.send failureCodes[res.statusCode] if failureCodes[res.statusCode]
-        msg.send res
-        msg.send err
-        msg.send body
+        msg.send res.statusCode
         try
           results = JSON.parse body
           cheese = results.response.Cheese.name
+          cheese_producer = results.response.CheeseProducer.name
+          age_classification = results.response.Cheese.age_classification
+          milk_treatment = results.response.MilkTreatment.name
+          cheese_location = results.response.CheeseLocation[0].city + ", " + results.response.CheeseLocation[0].StateRegion.code  
           #msg.send util.format "%s - %s - %s - %s - %s - %s", user.id, user.first_name, user.last_name, user.username, user.display_name, user.url
           #msg.send util.format "Profile Picture: %s", user.images[115]
-          msg.send "Yum! The #{cheese} was delicious."
+          msg.send "Yum! The #{cheese} by #{cheese_producer} from #{cheese_location} was delicious."
 
