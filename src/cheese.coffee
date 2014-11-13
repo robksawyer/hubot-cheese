@@ -134,6 +134,8 @@ module.exports = (robot) ->
       .get() (err, res, body) ->
         try
           results = JSON.parse body
+          console.log JSON.stringify results
+          
           return msg.send failureCodes[results.meta.code] if failureCodes[results.meta.code]
           
           cheese = results.response.Cheese.name
