@@ -45,8 +45,6 @@ module.exports = (robot) ->
       protocol: 'https'
       host: 'curdcollective-api.herokuapp.com'
       pathname: util.format '1.0/cheeses/info/%s', 193
-    
-    msg.send endpoint
 
     msg
       .http(endpoint)
