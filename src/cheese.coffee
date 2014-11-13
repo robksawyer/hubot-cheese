@@ -50,11 +50,11 @@ module.exports = (robot) ->
   # Command:
   #   Hubot> hubot eat cheese
   #
-  robot.respond /eat cheese|have some cheese/i, (msg) ->
+  robot.respond /eat cheese|eat a cheese|have some cheese/i, (msg) ->
     endpoint = url.format
       protocol: 'https'
       host: 'curdcollective-api.herokuapp.com'
-      pathname: util.format '1.0/cheeses/info/%s.json', Math.random() * (2576 - 1) + 1
+      pathname: util.format '1.0/cheeses/info/%s.json', Math.ceil(Math.random() * (2576 - 1) + 1)
 
     msg
       .http(endpoint)
@@ -83,11 +83,11 @@ module.exports = (robot) ->
   # Command:
   #   Hubot> i want cheese
   #
-  robot.hear /cheese me|i want cheese|can i haz chee(s|z)e(.*)/i, (msg) ->
+  robot.respond /cheese me|i want cheese|can i haz chee(s|z)e(.*)/i, (msg) ->
     endpoint = url.format
       protocol: 'https'
       host: 'curdcollective-api.herokuapp.com'
-      pathname: util.format '1.0/cheeses/info/%s.json', Math.random() * (2576 - 1) + 1
+      pathname: util.format '1.0/cheeses/info/%s.json', Math.ceil(Math.random() * (2576 - 1) + 1)
 
     msg
       .http(endpoint)
@@ -197,7 +197,7 @@ module.exports = (robot) ->
     endpoint = url.format
             protocol: 'https'
             host: 'curdcollective-api.herokuapp.com'
-            pathname: util.format '1.0/cheeses/info/%s.json', Math.random() * (2576 - 1) + 1
+            pathname: util.format '1.0/cheeses/info/%s.json', Math.ceil(Math.random() * (2576 - 1) + 1)
 
     users = robot.brain.usersForFuzzyName(msg.match[1].trim())
 
