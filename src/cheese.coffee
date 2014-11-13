@@ -171,7 +171,6 @@ module.exports = (robot) ->
             details += "Rind: " + rind + "\n"
 
           milk_sources = (milk.name for milk in results.response.MilkSource)
-          console.log milk_sources
           if milk_sources
             milk_sources = milk_sources.join(',')
             details += "Milk Source(s): " + milk_sources + "\n"
