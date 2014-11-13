@@ -116,7 +116,7 @@ module.exports = (robot) ->
   # Command:
   #   Hubot> hubot cheese deets <cheese_id>
   #
-  robot.hear /cheese deets ([0-1]*)|what do you know about the cheese ([0-1]*)/i, (msg) ->
+  robot.respond /cheese deets ([0-1]*)|what do you know about the cheese ([0-1]*)/i, (msg) ->
     endpoint = url.format
       protocol: 'https'
       host: 'curdcollective-api.herokuapp.com'
@@ -180,6 +180,8 @@ module.exports = (robot) ->
           info = results.response.Cheese.info_overview
           if info
             details += info + "\n"
+
+          msg.send details
 
   #
   # Sends a piece of cheese to a user
