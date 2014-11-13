@@ -117,6 +117,10 @@ module.exports = (robot) ->
   #   Hubot> hubot cheese deets <cheese_id>
   #
   robot.respond /cheese deets ([0-1]*)|what do you know about the cheese ([0-1]*)/i, (msg) ->
+    
+    if not msg.match[1]
+      return 
+
     endpoint = url.format
       protocol: 'https'
       host: 'curdcollective-api.herokuapp.com'
