@@ -70,7 +70,11 @@ module.exports = (robot) ->
           age_classification = results.response.Cheese.age_classification
           milk_treatment = results.response.MilkTreatment.name
           cheese_location = results.response.CheeseLocation[0].city + ", " + results.response.CheeseLocation[0].StateRegion.code  
-          msg.send "Yum! The #{cheese} by #{cheese_producer} from #{cheese_location} was delicious."
+          
+          if cheese_location
+            msg.send "Yum! The #{cheese} by #{cheese_producer} from #{cheese_location} was delicious."
+          else 
+            msg.send "Yum! The #{cheese} by #{cheese_producer} was delicious."
 
   #
   # Feed cheese to the person that asked nicely
@@ -97,7 +101,11 @@ module.exports = (robot) ->
           age_classification = results.response.Cheese.age_classification
           milk_treatment = results.response.MilkTreatment.name
           cheese_location = results.response.CheeseLocation[0].city + ", " + results.response.CheeseLocation[0].StateRegion.code  
-          msg.reply "Have a piece of #{cheese} by #{cheese_producer} from #{cheese_location}."
+          
+          if cheese_location
+            msg.send "Have a piece of #{cheese} by #{cheese_producer} from #{cheese_location}."
+          else 
+            msg.send "Have a piece of #{cheese} by #{cheese_producer}."
 
   #
   # Sends a piece of cheese to a user
@@ -136,7 +144,11 @@ module.exports = (robot) ->
               age_classification = results.response.Cheese.age_classification
               milk_treatment = results.response.MilkTreatment.name
               cheese_location = results.response.CheeseLocation[0].city + ", " + results.response.CheeseLocation[0].StateRegion.code  
-              msg.reply "#{user.name} have a piece of #{cheese} by #{cheese_producer} from #{cheese_location}. Be sure to thank #{msg.message.user.name}."
+              
+              if cheese_location
+                msg.reply "#{user.name} have a piece of #{cheese} by #{cheese_producer} from #{cheese_location}. Be sure to thank #{msg.message.user.name}."
+              else
+                msg.reply "#{user.name} have a piece of #{cheese} by #{cheese_producer}. Be sure to thank #{msg.message.user.name}."
 
       else if users.length > 1
         msg.send "Too many users like that"
