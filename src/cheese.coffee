@@ -54,7 +54,7 @@ module.exports = (robot) ->
     endpoint = url.format
       protocol: 'http'
       host: 'curdcollective-api.herokuapp.com'
-      pathname: util.format '1.0/cheeses/info/%s.json', Math.ceil(Math.random() * (2576 - 1) + 1)
+      pathname: util.format '1.0/cheeses/info/%s', Math.ceil(Math.random() * (2576 - 1) + 1)
 
     msg
       .http(endpoint)
@@ -87,7 +87,7 @@ module.exports = (robot) ->
     endpoint = url.format
       protocol: 'http'
       host: 'curdcollective-api.herokuapp.com'
-      pathname: util.format '1.0/cheeses/info/%s.json', Math.ceil(Math.random() * (2576 - 1) + 1)
+      pathname: util.format '1.0/cheeses/info/%s', Math.ceil(Math.random() * (2576 - 1) + 1)
 
     msg
       .http(endpoint)
@@ -121,9 +121,9 @@ module.exports = (robot) ->
     endpoint = url.format
       protocol: 'http'
       host: 'curdcollective-api.herokuapp.com'
-      pathname: util.format '1.0/cheeses/info/%s.json', msg.match[1]
+      pathname: util.format '1.0/cheeses/info/%s', msg.match[1].trim()
 
-    msg.send "Searching my cheese brain for cheese " + msg.match[1]
+    msg.send "Searching my cheese brain for cheese " + msg.match[1].trim()
 
     msg
       .http(endpoint)
@@ -197,7 +197,7 @@ module.exports = (robot) ->
     endpoint = url.format
             protocol: 'http'
             host: 'curdcollective-api.herokuapp.com'
-            pathname: util.format '1.0/cheeses/info/%s.json', Math.ceil(Math.random() * (2576 - 1) + 1)
+            pathname: util.format '1.0/cheeses/info/%s', Math.ceil(Math.random() * (2576 - 1) + 1)
 
     users = robot.brain.usersForFuzzyName(msg.match[1].trim())
 
@@ -240,7 +240,7 @@ module.exports = (robot) ->
     endpoint = url.format
       protocol: 'http'
       host: 'curdcollective-api.herokuapp.com'
-      pathname: util.format '1.0/cheeses/total.json'
+      pathname: util.format '1.0/cheeses/total'
 
     msg
       .http(endpoint)
