@@ -17,6 +17,8 @@
 #
 # Commands:
 #   hubot eat cheese - This will feed your robot a random piece of cheese and tell you a few more details about which cheese it consumed.
+#   hubot i want cheese - Sends cheese to the person asking
+#   hubot how many cheeses exist? - Sends a total number of cheeses that exist in the Curd Collective API
 #
 # Notes:
 #   Feed your robot daily.
@@ -79,7 +81,7 @@ module.exports = (robot) ->
     endpoint = url.format
       protocol: 'https'
       host: 'curdcollective-api.herokuapp.com'
-      pathname: util.format '1.0/cheeses/info/%s', Math.random() * (3000 - 1) + 1
+      pathname: util.format '1.0/cheeses/info/%s', Math.random() * (2576 - 1) + 1
 
     msg
       .http(endpoint)
@@ -96,20 +98,18 @@ module.exports = (robot) ->
           age_classification = results.response.Cheese.age_classification
           milk_treatment = results.response.MilkTreatment.name
           cheese_location = results.response.CheeseLocation[0].city + ", " + results.response.CheeseLocation[0].StateRegion.code  
-          #msg.send util.format "%s - %s - %s - %s - %s - %s", user.id, user.first_name, user.last_name, user.username, user.display_name, user.url
-          #msg.send util.format "Profile Picture: %s", user.images[115]
-          msg.send "Have a piece of #{cheese} by #{cheese_producer} from #{cheese_location}."
+          msg.reply "Have a piece of #{cheese} by #{cheese_producer} from #{cheese_location}."
   
   #
   # Get the total number of cheeses that exist
   # Command:
   #   Hubot> hubot how many cheeses exist?
   #
-  robot.respond /how many cheeses exist(*.)/i, (msg) ->
+  robot.respond /how many cheeses exist(*.)|total cheeses|how many cheeses/i, (msg) ->
     endpoint = url.format
       protocol: 'https'
       host: 'curdcollective-api.herokuapp.com'
-      pathname: util.format '1.0/cheeses/total/'
+      pathname: util.format '1.0/cheeses/total'
 
     msg
       .http(endpoint)
