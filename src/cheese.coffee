@@ -112,6 +112,76 @@ module.exports = (robot) ->
             msg.send "Have a piece of #{cheese} by #{cheese_producer}."
 
   #
+  # Find more details about a cheese.
+  # Command:
+  #   Hubot> hubot cheese deets <cheese_id>
+  #
+  robot.hear /cheese deets ([0-1]*)|what do you know about the cheese ([0-1]*)/i, (msg) ->
+    endpoint = url.format
+      protocol: 'https'
+      host: 'curdcollective-api.herokuapp.com'
+      pathname: util.format '1.0/cheeses/info/%s', msg.match[1]
+
+    msg
+      .http(endpoint)
+      .query
+        client_id: process.env.HUBOT_CC_CLIENT_ID
+        client_secret: process.env.HUBOT_CC_CLIENT_SECRET
+      .get() (err, res, body) ->
+        try
+          results = JSON.parse body
+          return msg.send failureCodes[results.meta.code] if failureCodes[results.meta.code]
+          cheese = results.response.Cheese.name
+          details = "Name: " + cheese + "\n"
+
+          cheese_producer = results.response.CheeseProducer.name
+          if cheese_producer
+            details += "Producer: " + cheese_producer + "\n"
+
+          texture = results.response.Texture.name
+          if texture
+            details += "Texture: " + texture + "\n"
+
+          classification = results.response.Classification.name
+          if classification
+            details += "Classification: " + classification + "\n"
+
+          age_classification = results.response.Cheese.age_classification
+          if age_classification
+            details += "Age Classification: " + age_classification + "\n"
+
+          aging_time = results.response.Cheese.aging_time
+          if aging_time
+            details += "Aged for: " + aging_time + "\n"
+
+          rennet = results.response.RennetType.name
+          if rennet
+            details += "Rennet Type: " + rennet + "\n"
+
+          milk_treatment = results.response.MilkTreatment.name
+          if milk_treatment
+            details += "Milk Treatment: " + milk_treatment + "\n"
+          
+          rind = results.response.Rind.name
+          if rind
+            details += "Rind: " + rind + "\n"
+
+          milk_sources = for source.name in results.response.MilkSource
+          if milk_sources
+            milk_sources = milk_sources.join(',')
+            details += "Milk Source(s): " + milk_sources + "\n"
+
+          if results.response.CheeseLocation[0].city and results.response.CheeseLocation[0].StateRegion.code
+            cheese_location = results.response.CheeseLocation[0].city + ", " + results.response.CheeseLocation[0].StateRegion.code 
+          
+          if cheese_location
+            details += "Location: " + cheese_location + "\n"
+          
+          info = results.response.Cheese.info_overview
+          if info
+            details += info + "\n"
+
+  #
   # Sends a piece of cheese to a user
   # Command:
   #   Hubot> send cheese to @<user name>
