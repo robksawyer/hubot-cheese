@@ -44,7 +44,7 @@ module.exports = (robot) ->
     endpoint = url.format
       protocol: 'https'
       host: 'curdcollective-api.herokuapp.com'
-      pathname: util.format '1.0/cheeses/info/%s', 193
+      pathname: util.format '1.0/cheeses/info/%s', Math.random() * (3000 - 1) + low
 
     msg
       .http(endpoint)
