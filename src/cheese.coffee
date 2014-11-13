@@ -135,6 +135,7 @@ module.exports = (robot) ->
         try
           results = JSON.parse body
           return msg.send failureCodes[results.meta.code] if failureCodes[results.meta.code]
+          
           cheese = results.response.Cheese.name
           details = "Name: " + cheese + "\n"
 
@@ -170,7 +171,7 @@ module.exports = (robot) ->
           if rind
             details += "Rind: " + rind + "\n"
 
-          milk_sources = for source.name in results.response.MilkSource
+          milk_sources = (milk.name for milk in results.response.MilkSource)
           if milk_sources
             milk_sources = milk_sources.join(',')
             details += "Milk Source(s): " + milk_sources + "\n"
