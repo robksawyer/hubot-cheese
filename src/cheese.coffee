@@ -10,7 +10,8 @@
 #              This will provide you with the client_id and client_secret that you'll need to configure as an evironment variable.
 # 
 # Dependencies:
-#   https://curdcollective-api.herokuapp.com/1.0/cheeses/info/193.json?client_id=c7db062c&client_secret=194e46e98dfccaa10de6f198b3dce718
+#   util
+#   url
 #   
 # Configuration:
 #   HUBOT_CC_CLIENT_ID
@@ -25,9 +26,38 @@
 # Author:
 #   Rob Sawyer[https://github.com/robksawyer]
 
-module.exports = (robot) ->
-  robot.respond /hello/, (msg) ->
-    msg.reply "hello!"
+util = require 'util'
+url = require 'url'
 
-  robot.hear /orly/, ->
-    msg.send "yarly"
+process.env.HUBOT_CC_CLIENT_ID |= 'c7db062c'
+process.env.HUBOT_CC_CLIENT_SECRET |= '194e46e98dfccaa10de6f198b3dce718'
+
+failureCodes =
+  '403': 'Forbidden'
+  '404': 'Not Found'
+  '429': 'Too Many Requests'
+  '500': 'Internal Server Error'
+  '504': 'Service Unavailable'
+
+module.exports = (robot) ->
+
+  robot.respond /eat cheese/, (msg) ->
+    endpoint = url.format
+      protocol: 'https'
+      host: 'curdcollective-api.herokuapp.com'
+      pathname: util.format '1.0/cheeses/info/%s', 193
+    
+    msg
+      .http(endpoint)
+      .query
+        client_id: process.env.HUBOT_CC_CLIENT_ID
+        client_secret: process.env.HUBOT_CC_CLIENT_SECRET
+      .get() (err, res, body) ->
+        return msg.send failureCodes[res.statusCode] if failureCodes[res.statusCode]
+        try
+          results = JSON.parse body
+          cheese = results.response.Cheese.name
+          #msg.send util.format "%s - %s - %s - %s - %s - %s", user.id, user.first_name, user.last_name, user.username, user.display_name, user.url
+          #msg.send util.format "Profile Picture: %s", user.images[115]
+          msg.send "Yum, the #{cheese} was delicious"
+          
