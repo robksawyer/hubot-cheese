@@ -27,8 +27,8 @@
 util = require 'util'
 url = require 'url'
 
-process.env.HUBOT_CC_CLIENT_ID |= 'c7db062c'
-process.env.HUBOT_CC_CLIENT_SECRET |= '194e46e98dfccaa10de6f198b3dce718'
+process.env.HUBOT_CC_CLIENT_ID ||= 'c7db062c'
+process.env.HUBOT_CC_CLIENT_SECRET ||= '194e46e98dfccaa10de6f198b3dce718'
 
 failureCodes =
   '403': 'Forbidden'
@@ -43,15 +43,15 @@ module.exports = (robot) ->
     endpoint = url.format
       protocol: 'https'
       host: 'curdcollective-api.herokuapp.com'
-      client_id: process.env.HUBOT_CC_CLIENT_ID
-      client_secret: process.env.HUBOT_CC_CLIENT_SECRET
       pathname: util.format '1.0/cheeses/info/%s', 193
     
     msg.send endpoint
 
     msg
       .http(endpoint)
-      .header('accept', 'application/json')
+      .query
+        client_id: process.env.HUBOT_CC_CLIENT_ID
+        client_secret: process.env.HUBOT_CC_CLIENT_SECRET
       .get() (err, res, body) ->
         return msg.send failureCodes[res.statusCode] if failureCodes[res.statusCode]
         try
