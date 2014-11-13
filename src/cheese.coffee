@@ -117,9 +117,6 @@ module.exports = (robot) ->
   #   Hubot> hubot cheese deets <cheese_id>
   #
   robot.respond /cheese deets ([0-1]*)|what do you know about the cheese ([0-1]*)/i, (msg) ->
-    
-    if not msg.match[1]
-      return 
 
     endpoint = url.format
       protocol: 'https'
@@ -203,8 +200,7 @@ module.exports = (robot) ->
             host: 'curdcollective-api.herokuapp.com'
             pathname: util.format '1.0/cheeses/info/%s', Math.random() * (2576 - 1) + 1
 
-    if msg.match[1]
-      users = robot.brain.usersForFuzzyName(msg.match[1].trim())
+    users = robot.brain.usersForFuzzyName(msg.match[1].trim())
 
     if users
       if users.length is 1
