@@ -116,7 +116,7 @@ module.exports = (robot) ->
   # Command:
   #   Hubot> hubot cheese deets <cheese_id>
   #
-  robot.respond /cheese deets ([0-1]*)|what do you know about the cheese ([0-1]*)/i, (msg) ->
+  robot.respond /cheese deets ([0-9]*)|what do you know about the cheese ([0-9]*)/i, (msg) ->
 
     endpoint = url.format
       protocol: 'http'
