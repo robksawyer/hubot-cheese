@@ -52,7 +52,10 @@ module.exports = (robot) ->
         client_id: process.env.HUBOT_CC_CLIENT_ID
         client_secret: process.env.HUBOT_CC_CLIENT_SECRET
       .get() (err, res, body) ->
-        return msg.send failureCodes[res.statusCode] if failureCodes[res.statusCode]
+        #return msg.send failureCodes[res.statusCode] if failureCodes[res.statusCode]
+        msg.send res
+        msg.send err
+        msg.send body
         try
           results = JSON.parse body
           cheese = results.response.Cheese.name
