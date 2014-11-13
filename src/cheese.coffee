@@ -110,10 +110,10 @@ module.exports = (robot) ->
             host: 'curdcollective-api.herokuapp.com'
             pathname: util.format '1.0/cheeses/info/%s', Math.random() * (2576 - 1) + 1
 
-    msg.send msg.match[0]
+    msg.send msg.match[1]
 
-    if msg.match[0]
-      users = robot.brain.usersForFuzzyName(msg.match[0].trim())
+    if msg.match[1]
+      users = robot.brain.usersForFuzzyName(msg.match[1].trim())
 
     msg.send users
 
