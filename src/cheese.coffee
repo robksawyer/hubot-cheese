@@ -48,7 +48,7 @@ module.exports = (robot) ->
   #
   # Respond when someone mentions the number of cheeses
   #
-  robot.respond /that(*.) (*.) of cheese|wow that(.*) (.*) of cheese/i, (msg) -> 
+  robot.respond /that(.*) (.*) of cheese|wow that(.*) (.*) of cheese/i, (msg) -> 
     msg.reply "What can I say, I like cheese."
 
   #
