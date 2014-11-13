@@ -19,6 +19,6 @@ Then add **hubot-cheese** to your `external-scripts.json`:
 ## Sample Interaction
 
 ```
-user1>> hubot hello
-hubot>> hello!
+user1>> hubot eat cheese
+hubot>> Yum! The Smokey Blue Cheese by Rogue Creamery was delicious.
 ```

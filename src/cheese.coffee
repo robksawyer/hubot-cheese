@@ -16,7 +16,7 @@
 #   HUBOT_CC_CLIENT_SECRET
 #
 # Commands:
-#   hubot eat cheese - This will feed your robot a random piece of cheese and tell you a few more details about which he ate.
+#   hubot eat cheese - This will feed your robot a random piece of cheese and tell you a few more details about which cheese it consumed.
 #
 # Notes:
 #   Feed your robot daily.
@@ -58,5 +58,5 @@ module.exports = (robot) ->
           cheese = results.response.Cheese.name
           #msg.send util.format "%s - %s - %s - %s - %s - %s", user.id, user.first_name, user.last_name, user.username, user.display_name, user.url
           #msg.send util.format "Profile Picture: %s", user.images[115]
-          msg.send "Yum, the #{cheese} was delicious"
+          msg.send "Yum! The #{cheese} was delicious."
 
