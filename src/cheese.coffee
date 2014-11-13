@@ -114,9 +114,9 @@ module.exports = (robot) ->
   #
   # Sends a piece of cheese to a user
   # Command:
-  #   Hubot> send cheese to <user name>
+  #   Hubot> send cheese to <user name>: 
   #
-  robot.hear /send cheese to (.*?)/i, (msg) ->
+  robot.hear /send cheese to (.*?):/i, (msg) ->
 
     endpoint = url.format
             protocol: 'https'
