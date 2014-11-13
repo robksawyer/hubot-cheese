@@ -40,27 +40,6 @@ failureCodes =
   '500': 'Internal Server Error'
   '504': 'Service Unavailable'
 
-cheeseUser = (msg, toUser, fromUser) ->
-  endpoint = url.format
-      protocol: 'https'
-      host: 'curdcollective-api.herokuapp.com'
-      pathname: util.format '1.0/cheeses/info/%s', Math.random() * (2576 - 1) + 1
-  msg
-      .http(endpoint)
-      .query
-        client_id: process.env.HUBOT_CC_CLIENT_ID
-        client_secret: process.env.HUBOT_CC_CLIENT_SECRET
-      .get() (err, res, body) ->
-        #return msg.send failureCodes[res.statusCode] if failureCodes[res.statusCode]
-        try
-          results = JSON.parse body
-          cheese = results.response.Cheese.name
-          cheese_producer = results.response.CheeseProducer.name
-          age_classification = results.response.Cheese.age_classification
-          milk_treatment = results.response.MilkTreatment.name
-          cheese_location = results.response.CheeseLocation[0].city + ", " + results.response.CheeseLocation[0].StateRegion.code  
-          msg.reply "#{toUser.name} have a piece of #{cheese} by #{cheese_producer} from #{cheese_location}. Be sure to thank #{fromUser.name}."
-
 module.exports = (robot) ->
   
   #
@@ -122,25 +101,42 @@ module.exports = (robot) ->
   #
   # Sends a piece of cheese to a user
   # Command:
-  #   Hubot> hubot cheese <user name>: <message>
+  #   Hubot> hubot cheese <user name>
   #
   robot.hear /cheese (.*?)/i, (msg) ->
-    endpoint = url.format
-      protocol: 'https'
-      host: 'curdcollective-api.herokuapp.com'
-      pathname: util.format '1.0/cheeses/info/%s', Math.random() * (2576 - 1) + 1
 
-    if msg.match
+    endpoint = url.format
+            protocol: 'https'
+            host: 'curdcollective-api.herokuapp.com'
+            pathname: util.format '1.0/cheeses/info/%s', Math.random() * (2576 - 1) + 1
+            
+    if msg.match[1]
       users = robot.brain.usersForFuzzyName(msg.match[1].trim())
 
-    if users.length is 1
-      user = users[0]
-      cheeseUser(msg, user, msg.message.user)
-      msg.send "Cheese being prepared"
-    else if users.length > 1
-      msg.send "Too many users like that"
-    else
-      msg.send "#{msg.match[1]}? Never heard of 'em"
+    if users
+      if users.length is 1
+        user = users[0]
+
+        msg
+          .http(endpoint)
+          .query
+            client_id: process.env.HUBOT_CC_CLIENT_ID
+            client_secret: process.env.HUBOT_CC_CLIENT_SECRET
+          .get() (err, res, body) ->
+            #return msg.send failureCodes[res.statusCode] if failureCodes[res.statusCode]
+            try
+              results = JSON.parse body
+              cheese = results.response.Cheese.name
+              cheese_producer = results.response.CheeseProducer.name
+              age_classification = results.response.Cheese.age_classification
+              milk_treatment = results.response.MilkTreatment.name
+              cheese_location = results.response.CheeseLocation[0].city + ", " + results.response.CheeseLocation[0].StateRegion.code  
+              msg.reply "#{user.name} have a piece of #{cheese} by #{cheese_producer} from #{cheese_location}. Be sure to thank #{msg.message.user.name}."
+
+      else if users.length > 1
+        msg.send "Too many users like that"
+      else
+        msg.send "#{msg.match[1]}? Never heard of 'em"
   
   #
   # Get the total number of cheeses that exist
