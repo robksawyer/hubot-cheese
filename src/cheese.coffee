@@ -69,7 +69,9 @@ module.exports = (robot) ->
           cheese_producer = results.response.CheeseProducer.name
           age_classification = results.response.Cheese.age_classification
           milk_treatment = results.response.MilkTreatment.name
-          cheese_location = results.response.CheeseLocation[0].city + ", " + results.response.CheeseLocation[0].StateRegion.code  
+
+          if results.response.CheeseLocation[0].city and results.response.CheeseLocation[0].StateRegion.code
+            cheese_location = results.response.CheeseLocation[0].city + ", " + results.response.CheeseLocation[0].StateRegion.code
           
           if cheese_location
             msg.send "Yum! The #{cheese} by #{cheese_producer} from #{cheese_location} was delicious."
@@ -100,7 +102,9 @@ module.exports = (robot) ->
           cheese_producer = results.response.CheeseProducer.name
           age_classification = results.response.Cheese.age_classification
           milk_treatment = results.response.MilkTreatment.name
-          cheese_location = results.response.CheeseLocation[0].city + ", " + results.response.CheeseLocation[0].StateRegion.code  
+
+          if results.response.CheeseLocation[0].city and results.response.CheeseLocation[0].StateRegion.code
+            cheese_location = results.response.CheeseLocation[0].city + ", " + results.response.CheeseLocation[0].StateRegion.code  
           
           if cheese_location
             msg.send "Have a piece of #{cheese} by #{cheese_producer} from #{cheese_location}."
@@ -143,7 +147,9 @@ module.exports = (robot) ->
               cheese_producer = results.response.CheeseProducer.name
               age_classification = results.response.Cheese.age_classification
               milk_treatment = results.response.MilkTreatment.name
-              cheese_location = results.response.CheeseLocation[0].city + ", " + results.response.CheeseLocation[0].StateRegion.code  
+              
+              if results.response.CheeseLocation[0].city and results.response.CheeseLocation[0].StateRegion.code
+                cheese_location = results.response.CheeseLocation[0].city + ", " + results.response.CheeseLocation[0].StateRegion.code  
               
               if cheese_location
                 msg.reply "#{user.name} have a piece of #{cheese} by #{cheese_producer} from #{cheese_location}. Be sure to thank #{msg.message.user.name}."
