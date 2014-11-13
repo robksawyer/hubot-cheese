@@ -40,7 +40,7 @@ failureCodes =
   '500': 'Internal Server Error'
   '504': 'Service Unavailable'
 
-cheeseUser = (toUser, fromUser) ->
+cheeseUser = (toUser, fromUser, message) ->
   endpoint = url.format
       protocol: 'https'
       host: 'curdcollective-api.herokuapp.com'
@@ -59,7 +59,7 @@ cheeseUser = (toUser, fromUser) ->
           age_classification = results.response.Cheese.age_classification
           milk_treatment = results.response.MilkTreatment.name
           cheese_location = results.response.CheeseLocation[0].city + ", " + results.response.CheeseLocation[0].StateRegion.code  
-          msg.reply "@#{toUser.name} have a piece of #{cheese} by #{cheese_producer} from #{cheese_location}. Be sure to thank @#{fromUser}."
+          msg.reply "#{toUser.name} have a piece of #{cheese} by #{cheese_producer} from #{cheese_location}. Be sure to thank #{fromUser}."
 
 module.exports = (robot) ->
   
@@ -122,9 +122,9 @@ module.exports = (robot) ->
   #
   # Sends a piece of cheese to a user
   # Command:
-  #   Hubot> hubot cheese @someone
+  #   Hubot> hubot cheese <user name>: <message>
   #
-  robot.hear /cheese (.*?)/i, (msg) ->
+  robot.hear /cheese (.*?): (.*)/i, (msg) ->
     endpoint = url.format
       protocol: 'https'
       host: 'curdcollective-api.herokuapp.com'
