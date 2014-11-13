@@ -59,7 +59,7 @@ cheeseUser = (msg, toUser, fromUser) ->
           age_classification = results.response.Cheese.age_classification
           milk_treatment = results.response.MilkTreatment.name
           cheese_location = results.response.CheeseLocation[0].city + ", " + results.response.CheeseLocation[0].StateRegion.code  
-          msg.reply "#{toUser.name} have a piece of #{cheese} by #{cheese_producer} from #{cheese_location}. Be sure to thank #{fromUser}."
+          msg.reply "#{toUser.name} have a piece of #{cheese} by #{cheese_producer} from #{cheese_location}. Be sure to thank #{fromUser.name}."
 
 module.exports = (robot) ->
   
