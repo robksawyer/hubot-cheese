@@ -40,6 +40,27 @@ failureCodes =
   '500': 'Internal Server Error'
   '504': 'Service Unavailable'
 
+cheeseUser = (toUser, fromUser) ->
+  endpoint = url.format
+      protocol: 'https'
+      host: 'curdcollective-api.herokuapp.com'
+      pathname: util.format '1.0/cheeses/info/%s', Math.random() * (2576 - 1) + 1
+  msg
+      .http(endpoint)
+      .query
+        client_id: process.env.HUBOT_CC_CLIENT_ID
+        client_secret: process.env.HUBOT_CC_CLIENT_SECRET
+      .get() (err, res, body) ->
+        #return msg.send failureCodes[res.statusCode] if failureCodes[res.statusCode]
+        try
+          results = JSON.parse body
+          cheese = results.response.Cheese.name
+          cheese_producer = results.response.CheeseProducer.name
+          age_classification = results.response.Cheese.age_classification
+          milk_treatment = results.response.MilkTreatment.name
+          cheese_location = results.response.CheeseLocation[0].city + ", " + results.response.CheeseLocation[0].StateRegion.code  
+          msg.reply "@#{toUser.name} have a piece of #{cheese} by #{cheese_producer} from #{cheese_location}. Be sure to thank @#{fromUser}."
+
 module.exports = (robot) ->
   
   #
@@ -60,7 +81,6 @@ module.exports = (robot) ->
         client_secret: process.env.HUBOT_CC_CLIENT_SECRET
       .get() (err, res, body) ->
         #return msg.send failureCodes[res.statusCode] if failureCodes[res.statusCode]
-        msg.send res.statusCode
         try
           results = JSON.parse body
           cheese = results.response.Cheese.name
@@ -77,7 +97,7 @@ module.exports = (robot) ->
   # Command:
   #   Hubot> hubot i want cheese
   #
-  robot.hear /i want cheese|can i haz cheese(.*)/i, (msg) ->
+  robot.hear /cheese me|i want cheese|can i haz chee(s|z)e(.*)/i, (msg) ->
     endpoint = url.format
       protocol: 'https'
       host: 'curdcollective-api.herokuapp.com'
@@ -90,7 +110,6 @@ module.exports = (robot) ->
         client_secret: process.env.HUBOT_CC_CLIENT_SECRET
       .get() (err, res, body) ->
         #return msg.send failureCodes[res.statusCode] if failureCodes[res.statusCode]
-        msg.send res.statusCode
         try
           results = JSON.parse body
           cheese = results.response.Cheese.name
@@ -99,6 +118,27 @@ module.exports = (robot) ->
           milk_treatment = results.response.MilkTreatment.name
           cheese_location = results.response.CheeseLocation[0].city + ", " + results.response.CheeseLocation[0].StateRegion.code  
           msg.reply "Have a piece of #{cheese} by #{cheese_producer} from #{cheese_location}."
+
+  #
+  # Sends a piece of cheese to a user
+  # Command:
+  #   Hubot> hubot cheese @someone
+  #
+  robot.hear /cheese (.*?)/i, (msg) ->
+    endpoint = url.format
+      protocol: 'https'
+      host: 'curdcollective-api.herokuapp.com'
+      pathname: util.format '1.0/cheeses/info/%s', Math.random() * (2576 - 1) + 1
+
+    users = robot.brain.usersForFuzzyName(msg.match[1].trim())
+    if users.length is 1
+      user = users[0]
+      cheeseUser(user, msg.message.user)
+      msg.send "Cheese being prepared"
+    else if users.length > 1
+      msg.send "Too many users like that"
+    else
+      msg.send "#{msg.match[1]}? Never heard of 'em"
   
   #
   # Get the total number of cheeses that exist
@@ -118,7 +158,6 @@ module.exports = (robot) ->
         client_secret: process.env.HUBOT_CC_CLIENT_SECRET
       .get() (err, res, body) ->
         #return msg.send failureCodes[res.statusCode] if failureCodes[res.statusCode]
-        msg.send res.statusCode
         try
           results = JSON.parse body
           total_cheese = results.response
