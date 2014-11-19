@@ -56,7 +56,7 @@ module.exports = (robot) ->
   # Command:
   #   Hubot> hubot eat cheese
   #
-  robot.respond /eat cheese|eat a cheese|have some cheese/i, (msg) ->
+  robot.respond /eat cheese|eat (.*)? cheese|some cheese/i, (msg) ->
     endpoint = url.format
       protocol: 'https'
       host: 'curdcollective-api.herokuapp.com'
@@ -242,7 +242,7 @@ module.exports = (robot) ->
   # Command:
   #   Hubot> hubot how many cheeses exist?
   #
-  robot.respond /how many cheeses exist(.*)|total cheese(.*)|how many cheeses|cheese total/i, (msg) ->
+  robot.respond /how many cheeses exist(.*)?|total cheese(.*)|how many cheeses|cheese total/i, (msg) ->
     endpoint = url.format
       protocol: 'https'
       host: 'curdcollective-api.herokuapp.com'
