@@ -14,6 +14,8 @@
 # Configuration:
 #   HUBOT_CC_CLIENT_ID
 #   HUBOT_CC_CLIENT_SECRET
+#   
+#   I've provided these below just in case you don't feel like signing up. If you did, that'd be awesome of you, though.
 #
 # Commands:
 #   hubot eat cheese - This will feed your robot a random piece of cheese and tell you a few more details about which cheese it consumed.
